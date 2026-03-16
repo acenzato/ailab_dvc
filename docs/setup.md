@@ -55,4 +55,12 @@ dvc remote add <name> <s3://bucket-name/path/to/data/storage>
 dvc remote default <name>
 ```
 Each remote should be given a name. It is recommended not to put DVC data in the root of the bucket. If need arises to place other stuff in the bucket you would mix it up with DVC data. It is possible to migrate the data storage but it breaks hitory and reproducibility so try to avoid it.
+
+## Data
+
+Let's now add some data
+```bash
+dvc add datasets/pokemon
+git commit -m "Add raw pokemon dataset"
+git push
 ```
