@@ -3,4 +3,4 @@ outs:
   size: 1403658
   nfiles: 13
   hash: md5
-  path: pokemon
+  path: pokemon_raw
