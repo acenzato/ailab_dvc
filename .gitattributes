@@ -1,0 +1,2 @@
+docs/squirtle_crop_bad.png filter=lfs diff=lfs merge=lfs -text
+docs/squirtle_crop_ok.png filter=lfs diff=lfs merge=lfs -text
