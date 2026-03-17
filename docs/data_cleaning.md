@@ -94,10 +94,62 @@ All the image edits are now rolled-back and we can manually crop the special cas
 
 ![](squirtle_crop_ok.png)
 
+## Reviewing past changes
+
+To review what was changed from one commit to another we can use the `diff` command. In this case we want to make sure that out manual edit did not accidentally modify any other image
+
+```bash
+# commit hash of commit before the error+revert
+old_commit=$(git rev-parse HEAD~3) 
+# last commit hash
+new_commit=$(git rev-parse HEAD)
+
+dvc diff $old_commit $new_commit
+```
+
+This should print something like
+
+```bash
+Modified:                    
+    datasets\pokemon\
+    datasets\pokemon\images\180px-SquirtleEXRossoFuocoeVerdeFoglia82.png
+
+files summary: 1 modified
+```
+
+## Crop images
+
 Let's get back to script-processing the images
 
 ```bash
 python src/preprocessing/crop.py datasets/pokemon/images datasets/pokemon/images
+```
+
+## Reviewing current changes
+
+We can also have a look at the current status of our data, similar to what we would do with `git status`
+
+```bash
+dvc data status --granular
+```
+
+```bash
+DVC uncommitted changes:
+  (use "dvc commit <file>..." to track changes)
+  (use "dvc checkout <file>..." to discard changes)
+        modified: datasets\pokemon\
+        modified: datasets\pokemon\images\wp6947855.png
+        modified: datasets\pokemon\images\pokemon-pokemon-pikachu-character.png
+        modified: datasets\pokemon\images\charmander-ichooseyou.png
+        modified: datasets\pokemon\images\v4-460px-Draw-Charmander-Step-22.png
+        modified: datasets\pokemon\images\minimalist-green-bulbasaur-tc0rfmz8zha11ihh.png
+        modified: datasets\pokemon\images\180px-SquirtleEXRossoFuocoeVerdeFoglia82.png
+        modified: datasets\pokemon\images\thumbbig-661939.png
+```
+
+Now that we verified what was changed by `crop.py` we can commit
+
+```bash
 dvc add datasets/pokemon
 git commit -m "square-crop images"
 ```
@@ -146,6 +198,8 @@ python src/preprocessing/rename.py datasets/pokemon
 dvc add datasets/pokemon
 git commit -m "Rename images with progressive zero-padded numbers"
 ```
+
+Note that since DVC works with file hashes renaming a file is not actually creating a new file in DVC storage, it just changes its metadata
 
 ## Merge to main
 
