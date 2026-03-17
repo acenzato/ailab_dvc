@@ -1,0 +1,6 @@
+outs:
+- md5: 66db7324338c983b38155fc7a90d46ec.dir
+  size: 1305603
+  nfiles: 9
+  hash: md5
+  path: disney_princesses
